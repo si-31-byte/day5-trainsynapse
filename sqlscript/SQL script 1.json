@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "CREATE TABLE dbo.VehicleAverages\n( \n    [AverageEngineTemperature] [float] NOT  NULL,\n    [AverageSpeed] [float] NOT  NULL,\n    [Snapshot] [datetime] NOT  NULL\n)\nWITH\n(\n    DISTRIBUTION = ROUND_ROBIN,\n    CLUSTERED COLUMNSTORE INDEX\n)\n\n\nselect * FROM dbo.VehicleAverages\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "srksynapsenews",
+				"poolName": "srksynapsenews"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
