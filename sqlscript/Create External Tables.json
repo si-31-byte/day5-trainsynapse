@@ -1,0 +1,17 @@
+{
+	"name": "Create External Tables",
+	"properties": {
+		"content": {
+			"query": "-- Create the database scoped credential. Here, we are authenticating using a storage account access key\nCREATE DATABASE SCOPED CREDENTIAL MyCredential\nWITH\n    IDENTITY = 'SHARED ACCESS SIGNATURE',\n    SECRET = '<your_storage_key>' ;\n\n-- Create the external data. Here we are establishing our source as a ADLS Gen2 storage account\nCREATE EXTERNAL DATA SOURCE MyDataSource\nWITH (\n    TYPE = HADOOP,\n    LOCATION = 'abfss://<container>@<storage_account>.dfs.core.windows.net',\n\tCREDENTIAL = MyCredential\n)\n\n-- Create the file format. Here we are referencing a delimited text file, with comma-separated values\nCREATE EXTERNAL FILE FORMAT MyTextFileFormat\nWITH\n(\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        FIELD_TERMINATOR = ',',\n        STRING_DELIMITER = '\"',\n        USE_TYPE_DEFAULT = False)\n)\n\n-- Create the external table. Here we are referencing a CSV with two int columns and a char column\nCREATE EXTERNAL TABLE [dbo].[MyExtTable] (\n    [f1] int NOT NULL,\n    [f2] char NOT NULL,\n    [f3] int NOT NULL\n)\nWITH (LOCATION='<my_file_location>',\n      DATA_SOURCE = MyDataSource,\n      FILE_FORMAT = MyTextFileFormat\n);\n\n-- We can now reference the data stored externally through this table.\nSELECT * FROM [dbo].[MyExtTable];\n\n-- Optionally, we can even load the data from the external table into a permanent user table for\n-- other querying purposes such as local modification.\nCREATE TABLE MyLocalCopy\nWITH (DISTRIBUTION = ROUND_ROBIN)\nAS SELECT * FROM\n[dbo].[MyExtTable];\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "srksynapsenews",
+				"poolName": "srksynapsenews"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
