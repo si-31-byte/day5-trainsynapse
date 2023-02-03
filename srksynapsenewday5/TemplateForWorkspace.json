@@ -163,7 +163,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "0cdcd416-7917-4cdb-958b-ce605d31d0a9"
+						"spark.autotune.trackingId": "46f62e6e-95fa-4637-93fb-01f642c7375b"
 					}
 				},
 				"metadata": {
@@ -188,15 +188,13 @@
 						"sparkVersion": "3.3",
 						"nodeCount": 3,
 						"cores": 8,
-						"memory": 56,
-						"automaticScaleJobs": false
+						"memory": 56
 					},
 					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"# Creating a managed Spark table\n",
 							"This notebook describes how to create a managed table from Spark. \n",
@@ -206,17 +204,15 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"spark.sql(\"CREATE TABLE cities  (name STRING, population INT) USING PARQUET\")\n",
 							""
 						],
 						"outputs": [],
-						"execution_count": 2
+						"execution_count": 1
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"Insert a few rows into the table using a list of values.\n",
 							""
@@ -224,16 +220,14 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"spark.sql(\"INSERT INTO cities VALUES (\\'Seattle\\', 730400), (\\'San Francisco\\', 881549), (\\'Beijing\\', 21540000), (\\'Bangalore\\', 10540000)\")"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": null
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"* Retrieve values back. Click on 'Chart' below to review the visualization.\n",
 							""
@@ -260,7 +254,11 @@
 								"aggData": "{\"population\":{\"Bangalore\":10540000,\"Beijing\":21540000,\"San Francisco\":881549,\"Seattle\":730400}}",
 								"isSummary": false,
 								"previewData": {
-									"filter": null
+									"filter": null,
+									"table": {
+										"rows": [],
+										"schema": {}
+									}
 								},
 								"isSql": false
 							},
@@ -270,11 +268,10 @@
 							"display(spark.sql(\"SELECT * FROM cities ORDER BY name\"))"
 						],
 						"outputs": [],
-						"execution_count": 4
+						"execution_count": null
 					},
 					{
 						"cell_type": "markdown",
-						"metadata": {},
 						"source": [
 							"Drop the table. Please note the data will get deleted from the primary storage account associated with this workspace.\n",
 							""
@@ -282,12 +279,11 @@
 					},
 					{
 						"cell_type": "code",
-						"metadata": {},
 						"source": [
 							"spark.sql(\"DROP TABLE cities\")"
 						],
 						"outputs": [],
-						"execution_count": 5
+						"execution_count": null
 					}
 				]
 			},
